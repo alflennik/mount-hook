@@ -5,6 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@babel/core": "^7.14.3",
+    "@babel/preset-env": "^7.14.2",
     "@babel/preset-react": "^7.13.13",
     "@babel/register": "^7.13.16",
     "immer": "^9.0.2",

@@ -1,8 +1,8 @@
-const { useEffect, useState } = require("react");
+import { useEffect, useState } from 'react'
 
 const Hello = () => {
   const [count, setCount] = useState(0)
-  
+
   useEffect(() => {
     setInterval(() => {
       setCount(state => state + 1)
@@ -12,7 +12,7 @@ const Hello = () => {
   useEffect(() => {
     console.log('hello', count)
   })
-  return "hello";
-};
+  return 'hello'
+}
 
 module.exports = Hello

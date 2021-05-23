@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import { useEffect } from 'react'
 import InitialImageProvider, { InitialImageContext } from '../../LolrandomCard/InitialImageProvider'
 import useNextImage from './useNextImage'

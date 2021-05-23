@@ -1,9 +1,9 @@
-require("jsdom-global")();
-const React = require('react')
-const ReactDOM = require("react-dom");
-const Hello = require('./Hello')
+import 'jsdom-global/register'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Hello from './Hello'
 
-const div = document.createElement("div");
-document.body.appendChild(div);
+const div = document.createElement('div')
+document.body.appendChild(div)
 
-ReactDOM.render(<Hello />, div);
+ReactDOM.render(<Hello />, div)
