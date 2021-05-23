@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import InitialImageProvider, { InitialImageContext } from './InitialImageProvider'
 import useNextImage from './useNextImage'
 
@@ -24,7 +24,7 @@ describe('useNextImage', () => {
   it('uses the preloaded image present on InitialImageContext', async () => {
     const initialImage = '<img src="MockImage" />'
 
-    const PopulateInitialImage = () => {
+    const PopulateInitialImage = ({ children }) => {
       const [isReady, setIsReady] = useState(false)
       const { setInitialImage } = useContext(InitialImageContext)
 
@@ -58,7 +58,8 @@ describe('useNextImage', () => {
 
   it('loads another image when getNext is called', async () => {
     const waitAMoment = callback => {
-      setTimeout(callback, 20)
+      callback()
+      // setTimeout(callback, 20)
     }
 
     await testHook(resolve => {
@@ -69,8 +70,14 @@ describe('useNextImage', () => {
       useEffect(() => {
         if (isLoading) return
 
+        if (iterationsToCheck.current === 0) {
+          resolve()
+          return
+        }
+
         expect(imageElement).not.toBeFalsy()
         expect(imageElement).not.toBe(previousImage.current)
+        expect(imageElement.src).not.toBe(previousImage.current?.src)
 
         waitAMoment(() => {
           getNext()
@@ -78,9 +85,6 @@ describe('useNextImage', () => {
 
         iterationsToCheck.current -= 1
         previousImage.current = imageElement
-        if (iterationsToCheck.current === 0) {
-          resolve()
-        }
       }, [imageElement, isLoading])
     })
   })
