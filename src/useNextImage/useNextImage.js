@@ -2,10 +2,10 @@ import { useContext, useEffect } from 'react'
 import loadImageElement from './loadImageElement'
 import bufferAlgorithm, { MAXIMUM_IMAGE_BUFFER_COUNT } from './bufferAlgorithm'
 import useFlow from './useFlow'
-import { InitialImageContext } from '../../LolrandomCard/InitialImageProvider'
+import { InitialImageContext } from './InitialImageProvider'
 
 const useNextImage = () => {
-  const { initialImage } = useContext(InitialImageContext)
+  const { initialImage } = useContext(InitialImageContext) || {}
   const {
     state: { loadedImages, imageElement },
     actions: { getNext, loadMore, replaceImageIfAvailable },

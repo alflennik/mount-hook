@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react'
+import useNextImage from './useNextImage/useNextImage'
 
 const Hello = () => {
-  const [count, setCount] = useState(0)
+  const { imageElement, isLoading, getNext } = useNextImage()
 
   useEffect(() => {
-    setInterval(() => {
-      setCount(state => state + 1)
-    }, 50)
-  }, [])
-
-  useEffect(() => {
-    console.log('hello', count)
+    console.log(imageElement)
   })
+
   return 'hello'
 }
 

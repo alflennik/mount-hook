@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
-import InitialImageProvider, { InitialImageContext } from '../../LolrandomCard/InitialImageProvider'
+import InitialImageProvider, { InitialImageContext } from './InitialImageProvider'
 import useNextImage from './useNextImage'
 
 describe('useNextImage', () => {
   it('automatically loads an image', async () => {
-    await testReact(resolve => {
+    await testHook(resolve => {
       const { imageElement, isLoading } = useNextImage()
 
       useEffect(() => {
@@ -46,7 +46,7 @@ describe('useNextImage', () => {
       )
     }
 
-    await testReact({ Wrapper }, resolve => {
+    await testHook({ Wrapper }, resolve => {
       const { imageElement, isLoading } = useNextImage()
       useEffect(() => {
         expect(imageElement).toBe(initialImage)
@@ -61,7 +61,7 @@ describe('useNextImage', () => {
       setTimeout(callback, 20)
     }
 
-    await testReact(resolve => {
+    await testHook(resolve => {
       const { imageElement, isLoading, getNext } = useNextImage()
       const previousImage = useRef()
       const iterationsToCheck = useRef(3)

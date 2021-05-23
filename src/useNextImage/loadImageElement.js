@@ -6,6 +6,9 @@ const loadImageElement = async () => {
     imageElement.onload = () => {
       resolve(imageElement)
     }
+    if (navigator.userAgent.includes('jsdom')) {
+      resolve(imageElement)
+    }
     imageElement.src = imageUrl
     imageElement.alt =
       'Lolrandom is a collection of thousands of images scoured from across the ' +
