@@ -10,13 +10,6 @@ const useFlow = ({ initialState, context, actions: actionsConfig, helpers = {} }
   const getContext = () => contextRef.current
   const getState = () => stateRef.current
 
-  const isMountedRef = useRef(true)
-  useLayoutEffect(() => {
-    return () => {
-      isMountedRef.current = false
-    }
-  }, [])
-
   useLayoutEffect(() => {
     contextRef.current = context
   })
@@ -27,10 +20,6 @@ const useFlow = ({ initialState, context, actions: actionsConfig, helpers = {} }
   }
 
   const produceNewState = stateProducer => {
-    if (isMountedRef.current === false) {
-      console.error('memory leak error')
-      return
-    }
     setState(produce(getState(), stateProducer))
   }
 
