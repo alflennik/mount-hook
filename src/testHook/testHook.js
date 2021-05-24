@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { act } from 'react-dom/test-utils'
 
 const Mounter = ({ resolve, useTestHook }) => {
   useTestHook(resolve)
@@ -25,15 +26,17 @@ const testHook = (...args) => {
   const container = document.createElement('div')
   document.body.appendChild(container)
 
-  return new Promise(resolve => {
-    ReactDOM.render(
-      <Wrapper>
-        <Mounter resolve={resolve} useTestHook={useTestHook} />
-      </Wrapper>,
-      container
-    )
-  }).then(() => {
-    ReactDOM.unmountComponentAtNode(container)
+  return act(async () => {
+    await new Promise(async resolve => {
+      ReactDOM.render(
+        <Wrapper>
+          <Mounter resolve={resolve} useTestHook={useTestHook} />
+        </Wrapper>,
+        container
+      )
+    }).then(() => {
+      ReactDOM.unmountComponentAtNode(container)
+    })
   })
 }
 
