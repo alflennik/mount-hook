@@ -60,24 +60,23 @@ useNextImage.actions = ({ getState, produceNewState, actions, unmountable }) => 
   },
 
   loadImage: async () => {
-    const imagePromise = loadImageElement()
-    // const imagePromise = unmountable(loadImageElement())
+    const imagePromise = unmountable(loadImageElement())
+    // const imagePromise = loadImageElement()
     produceNewState(state => {
       state.loadingImages.push(imagePromise)
     })
 
     let imageElement
-    // try {
-    imageElement = await imagePromise
-    // } catch (error) {
-    //   if (error.message && error.message.includes('Failed to fetch')) {
-    //     produceNewState(state => {
-    //       state.loadingImages = state.loadingImages.filter(each => each !== imagePromise)
-    //     })
-    //     return
-    //   }
-    //   throw error
-    // }
+    try {
+      imageElement = await imagePromise
+      console.log('completed', imageElement.src)
+    } catch (error) {
+      console.error(error)
+      produceNewState(state => {
+        state.loadingImages = state.loadingImages.filter(each => each !== imagePromise)
+      })
+      return
+    }
 
     produceNewState(state => {
       state.loadingImages = state.loadingImages.filter(each => each !== imagePromise)

@@ -58,7 +58,8 @@ describe('useNextImage', () => {
 
   it('loads another image when getNext is called', async () => {
     const waitAMoment = callback => {
-      setTimeout(callback, 20)
+      callback()
+      // setTimeout(callback, 20)
     }
 
     await testHook(resolve => {
@@ -79,11 +80,10 @@ describe('useNextImage', () => {
         expect(imageElement.src).not.toBe(previousImage.current?.src)
 
         waitAMoment(() => {
+          previousImage.current = imageElement
+          iterationsToCheck.current -= 1
           getNext()
         })
-
-        iterationsToCheck.current -= 1
-        previousImage.current = imageElement
       }, [imageElement, isLoading])
     })
   })

@@ -29,6 +29,7 @@ const useUnmountable = () => {
 
   const unmountable = useCallback(promise => {
     const result = Promise.race([resolveOnUnmountPromiseRef.current, promise])
+    console.log(Object.is(result, hasUnmounted) ? 'has unmounted' : 'still mounted')
     if (Object.is(result, hasUnmounted)) throw new UnmountError('TODO')
     return result
   }, [])

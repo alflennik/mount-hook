@@ -35,6 +35,7 @@ const testHook = (...args) => {
         container
       )
     }).then(() => {
+      console.log('unmounting')
       ReactDOM.unmountComponentAtNode(container)
     })
   })
