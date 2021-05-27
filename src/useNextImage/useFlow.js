@@ -1,7 +1,9 @@
-const { useRef, useState, useLayoutEffect, useMemo } = require('react')
-const produce = require('immer').default
+import { useRef, useState, useLayoutEffect, useMemo } from 'react'
+import produce from 'immer'
+import useUnmountable from './useUnmountable'
 
 const useFlow = ({ initialState, watch, actions: actionsConfig }) => {
+  const { unmountable, wrapAction } = useUnmountable()
   const [produceNewStateChangeCount, setProduceNewStateChangeCount] = useState(0)
 
   const watchedRef = useRef(watch)
@@ -32,11 +34,12 @@ const useFlow = ({ initialState, watch, actions: actionsConfig }) => {
     getState,
     getWatched,
     produceNewState,
+    unmountable,
     actions,
   }
   const createdActions = actionsConfig(actionArguments)
   Object.keys(createdActions).forEach(key => {
-    actions[key] = createdActions[key]
+    actions[key] = wrapAction(createdActions[key])
   })
 
   // Without memoization, both the state and actions would appear to have changed every time

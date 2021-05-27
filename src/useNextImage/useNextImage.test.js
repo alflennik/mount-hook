@@ -16,7 +16,6 @@ describe('useNextImage', () => {
       useEffect(() => {
         if (isLoading) return
         expect(imageElement).not.toBe(undefined)
-        expect(isLoading).toBe(false)
         resolve()
       })
     })
