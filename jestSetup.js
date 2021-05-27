@@ -18,6 +18,6 @@ global.fetch = () => {
       resolve({
         text: async () => imageLink,
       })
-    }, 400)
+    }, 30)
   })
 }

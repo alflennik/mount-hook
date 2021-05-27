@@ -7,30 +7,18 @@ class UnmountError extends Error {
   }
 }
 
-const hasUnmounted = {}
+const useUnmountable = () => {
+  const isMounted = useRef(true)
 
-const useResolveOnUnmountPromise = () => {
-  const resolveRef = useRef()
-  const resolveOnUnmountPromiseRef = useRef(
-    new Promise(resolve => {
-      resolveRef.current = resolve
-    })
-  )
   useLayoutEffect(() => {
     return () => {
-      resolveRef.current(hasUnmounted)
+      isMounted.current = false
     }
   }, [])
-  return resolveOnUnmountPromiseRef
-}
 
-const useUnmountable = () => {
-  const resolveOnUnmountPromiseRef = useResolveOnUnmountPromise()
-
-  const unmountable = useCallback(promise => {
-    const result = Promise.race([resolveOnUnmountPromiseRef.current, promise])
-    console.log(Object.is(result, hasUnmounted) ? 'has unmounted' : 'still mounted')
-    if (Object.is(result, hasUnmounted)) throw new UnmountError('TODO')
+  const unmountable = useCallback(async promise => {
+    const result = await promise
+    if (!isMounted.current) throw new UnmountError()
     return result
   }, [])
 

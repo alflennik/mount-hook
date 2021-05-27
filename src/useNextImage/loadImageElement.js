@@ -7,7 +7,7 @@ const loadImageElement = async () => {
       resolve(imageElement)
     }
     if (navigator.userAgent.includes('jsdom')) {
-      resolve(imageElement)
+      resolve(imageElement) // onload not present in jsdom
     }
     imageElement.src = imageUrl
     imageElement.alt =

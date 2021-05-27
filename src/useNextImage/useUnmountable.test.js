@@ -20,14 +20,14 @@ describe('useUnmountable', () => {
       return action
     }
 
-    await testHook(triggerUnmount => {
+    await testHook(unmount => {
       const { unmountable, wrapAction } = useUnmountable()
       const action = useUnmountableAsyncAction(unmountable)
       const wrappedAction = wrapAction(action)
 
       useEffect(() => {
         wrappedAction()
-        triggerUnmount()
+        unmount()
       }, [])
     })
 

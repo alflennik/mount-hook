@@ -5,7 +5,7 @@ import useNextImage from './useNextImage'
 
 describe('useNextImage', () => {
   it('automatically loads an image', async () => {
-    await testHook(resolve => {
+    await testHook(unmount => {
       const { imageElement, isLoading } = useNextImage()
 
       useEffect(() => {
@@ -16,7 +16,7 @@ describe('useNextImage', () => {
       useEffect(() => {
         if (isLoading) return
         expect(imageElement).not.toBe(undefined)
-        resolve()
+        unmount()
       })
     })
   })
@@ -46,23 +46,22 @@ describe('useNextImage', () => {
       )
     }
 
-    await testHook({ Wrapper }, resolve => {
+    await testHook({ Wrapper }, unmount => {
       const { imageElement, isLoading } = useNextImage()
       useEffect(() => {
         expect(imageElement).toBe(initialImage)
         expect(isLoading).toBe(false)
-        resolve()
+        unmount()
       }, [])
     })
   })
 
   it('loads another image when getNext is called', async () => {
     const waitAMoment = callback => {
-      callback()
-      // setTimeout(callback, 20)
+      setTimeout(callback, 20)
     }
 
-    await testHook(resolve => {
+    await testHook(unmount => {
       const { imageElement, isLoading, getNext } = useNextImage()
       const previousImage = useRef()
       const iterationsToCheck = useRef(3)
@@ -71,7 +70,7 @@ describe('useNextImage', () => {
         if (isLoading) return
 
         if (iterationsToCheck.current === 0) {
-          resolve()
+          unmount()
           return
         }
 

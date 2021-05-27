@@ -61,22 +61,12 @@ useNextImage.actions = ({ getState, produceNewState, actions, unmountable }) => 
 
   loadImage: async () => {
     const imagePromise = unmountable(loadImageElement())
-    // const imagePromise = loadImageElement()
     produceNewState(state => {
       state.loadingImages.push(imagePromise)
     })
 
     let imageElement
-    try {
-      imageElement = await imagePromise
-      console.log('completed', imageElement.src)
-    } catch (error) {
-      console.error(error)
-      produceNewState(state => {
-        state.loadingImages = state.loadingImages.filter(each => each !== imagePromise)
-      })
-      return
-    }
+    imageElement = await imagePromise
 
     produceNewState(state => {
       state.loadingImages = state.loadingImages.filter(each => each !== imagePromise)

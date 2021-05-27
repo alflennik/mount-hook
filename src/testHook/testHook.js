@@ -2,8 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { act } from 'react-dom/test-utils'
 
-const Mounter = ({ resolve, useTestHook }) => {
-  useTestHook(resolve)
+const Mounter = ({ unmount, useTestHook }) => {
+  useTestHook(unmount)
   return null
 }
 
@@ -30,12 +30,11 @@ const testHook = (...args) => {
     await new Promise(async resolve => {
       ReactDOM.render(
         <Wrapper>
-          <Mounter resolve={resolve} useTestHook={useTestHook} />
+          <Mounter unmount={resolve} useTestHook={useTestHook} />
         </Wrapper>,
         container
       )
     }).then(() => {
-      console.log('unmounting')
       ReactDOM.unmountComponentAtNode(container)
     })
   })
