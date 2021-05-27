@@ -1,4 +1,4 @@
-const { useEffect, useRef, useCallback } = require('react')
+const { useLayoutEffect, useRef, useCallback } = require('react')
 
 class UnmountError extends Error {
   constructor() {
@@ -7,26 +7,30 @@ class UnmountError extends Error {
   }
 }
 
-const useRejectOnUnmountPromise = () => {
-  const rejectRef = useRef()
-  const rejectOnUnmountPromiseRef = useRef(
-    new Promise((_, reject) => {
-      rejectRef.current = reject
+const hasUnmounted = {}
+
+const useResolveOnUnmountPromise = () => {
+  const resolveRef = useRef()
+  const resolveOnUnmountPromiseRef = useRef(
+    new Promise(resolve => {
+      resolveRef.current = resolve
     })
   )
-  useEffect(() => {
+  useLayoutEffect(() => {
     return () => {
-      rejectRef.current(new UnmountError())
+      resolveRef.current(hasUnmounted)
     }
   }, [])
-  return rejectOnUnmountPromiseRef
+  return resolveOnUnmountPromiseRef
 }
 
 const useUnmountable = () => {
-  const rejectOnUnmountPromiseRef = useRejectOnUnmountPromise()
+  const resolveOnUnmountPromiseRef = useResolveOnUnmountPromise()
 
   const unmountable = useCallback(promise => {
-    return Promise.race([rejectOnUnmountPromiseRef.current, promise])
+    const result = Promise.race([resolveOnUnmountPromiseRef.current, promise])
+    if (Object.is(result, hasUnmounted)) throw new UnmountError('TODO')
+    return result
   }, [])
 
   const wrapAction = action => {

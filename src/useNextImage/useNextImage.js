@@ -60,7 +60,8 @@ useNextImage.actions = ({ getState, produceNewState, actions, unmountable }) => 
   },
 
   loadImage: async () => {
-    const imagePromise = unmountable(loadImageElement())
+    const imagePromise = loadImageElement()
+    // const imagePromise = unmountable(loadImageElement())
     produceNewState(state => {
       state.loadingImages.push(imagePromise)
     })
