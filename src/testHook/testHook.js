@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { act } from 'react-dom/test-utils'
 
-const Mounter = ({ unmount, useTestHook }) => {
+const TestHookHostComponent = ({ unmount, useTestHook }) => {
   useTestHook(unmount)
   return null
 }
@@ -21,7 +21,7 @@ const testHook = (...args) => {
     ...providedOptions,
   }
 
-  const { Wrapper } = options
+  const { Wrapper: TestHookWrapperComponent } = options
 
   const container = document.createElement('div')
   document.body.appendChild(container)
@@ -29,9 +29,9 @@ const testHook = (...args) => {
   return act(async () => {
     await new Promise(async resolve => {
       ReactDOM.render(
-        <Wrapper>
-          <Mounter unmount={resolve} useTestHook={useTestHook} />
-        </Wrapper>,
+        <TestHookWrapperComponent>
+          <TestHookHostComponent unmount={resolve} useTestHook={useTestHook} />
+        </TestHookWrapperComponent>,
         container
       )
     }).then(() => {
