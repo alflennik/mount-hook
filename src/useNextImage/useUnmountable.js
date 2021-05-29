@@ -16,18 +16,34 @@ const useUnmountable = () => {
     }
   }, [])
 
-  const unmountable = useCallback(async promise => {
-    const result = await promise
-    if (!isMounted.current) throw new UnmountError()
-    return result
+  const unmountable = useCallback(promise => {
+    const wrappedPromise = promise.then(result => {
+      if (!isMounted.current) throw new UnmountError()
+      return result
+    })
+
+    wrappedPromise.originalCatch = wrappedPromise.catch
+    wrappedPromise.catch = errorHandler => {
+      return wrappedPromise.originalCatch(error => {
+        if (error.name === 'UnmountError') throw error
+        return errorHandler(error)
+      })
+    }
+
+    return wrappedPromise
   }, [])
 
   const wrapAction = action => {
     return (...args) => {
-      return action(...args)?.catch?.(error => {
+      const response = action(...args)
+      if (!(response && response.catch)) return response
+
+      response.catch(error => {
         if (error.name === 'UnmountError') return
         throw error
       })
+
+      return response
     }
   }
 
