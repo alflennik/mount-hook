@@ -7,6 +7,7 @@
     "test",
     "jest"
   ],
+  "type": "module",
   "main": "src/mountHook.js",
   "dependencies": {
     "jsdom": "^16.6.0",
