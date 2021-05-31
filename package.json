@@ -1,6 +1,6 @@
 {
   "name": "mount-hook",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "description": "A utility allowing you to test your React hooks without resorting to weird acrobatics.",
   "keywords": [
     "react",

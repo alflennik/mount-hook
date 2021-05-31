@@ -29,9 +29,11 @@ const mountHook = (/* options, useMountHook */ ...args) => {
   return act(async () => {
     await new Promise(async resolve => {
       ReactDOM.render(
-        <MountHookWrapperComponent>
-          <MountHookHostComponent unmount={resolve} useMountHook={useMountHook} />
-        </MountHookWrapperComponent>,
+        React.createElement(
+          MountHookWrapperComponent,
+          {},
+          React.createElement(MountHookHostComponent, { unmount: resolve, useMountHook }, null)
+        ),
         container
       )
     }).then(() => {
