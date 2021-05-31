@@ -1,7 +1,8 @@
 {
-  "name": "test-react",
-  "version": "1.0.0",
-  "description": "",
+  "name": "test-hook",
+  "version": "1.0.0-beta.0",
+  "description": "A utility allowing you to test your React hooks without resorting to weird acrobatics.",
+  "keywords": ["react", "test", "jest"],
   "main": "index.js",
   "dependencies": {
     "@babel/core": "^7.14.3",
@@ -12,16 +13,18 @@
     "jest": "^26.6.3",
     "jsdom": "^16.6.0",
     "jsdom-global": "^3.0.2",
-    "prop-types": "^15.7.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "prop-types": "^15.7.2"
+  },
+  "peerDependencies": {
+    "react": "^16.10.x",
+    "react-dom": "^16.10.x"
   },
   "devDependencies": {
     "prettier": "^2.3.0"
   },
-  "scripts": {
-    "test": "jest"
+  "author": {
+    "name": "Alexander Flenniken",
+    "url": "https://github.com/alflennik"
   },
-  "author": "",
-  "license": "ISC"
+  "license": "MIT"
 }
