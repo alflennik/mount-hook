@@ -2,8 +2,8 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { act } from 'react-dom/test-utils'
 
-const TestHookHostComponent = ({ unmount, useTestHook }) => {
-  useTestHook(unmount)
+const MountHookHostComponent = ({ unmount, useMountHook }) => {
+  useMountHook(unmount)
   return null
 }
 
@@ -13,15 +13,15 @@ const defaultOptions = {
   },
 }
 
-const testHook = (...args) => {
-  const useTestHook = args[1] ? args[1] : args[0]
+const mountHook = (/* options, useMountHook */ ...args) => {
+  const useMountHook = args[1] ? args[1] : args[0]
   const providedOptions = args[1] ? args[0] : {}
   const options = {
     ...defaultOptions,
     ...providedOptions,
   }
 
-  const { Wrapper: TestHookWrapperComponent } = options
+  const { Wrapper: MountHookWrapperComponent } = options
 
   const container = document.createElement('div')
   document.body.appendChild(container)
@@ -29,9 +29,9 @@ const testHook = (...args) => {
   return act(async () => {
     await new Promise(async resolve => {
       ReactDOM.render(
-        <TestHookWrapperComponent>
-          <TestHookHostComponent unmount={resolve} useTestHook={useTestHook} />
-        </TestHookWrapperComponent>,
+        <MountHookWrapperComponent>
+          <MountHookHostComponent unmount={resolve} useMountHook={useMountHook} />
+        </MountHookWrapperComponent>,
         container
       )
     }).then(() => {
@@ -40,4 +40,4 @@ const testHook = (...args) => {
   })
 }
 
-export default testHook
+export default mountHook

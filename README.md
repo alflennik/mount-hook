@@ -1,16 +1,16 @@
-# Test Hook
+# Mount Hook
 
 A utility allowing you to test your hooks without resorting to weird acrobatics.
 
 Not tied to any particular test framework.
 
 ```js
-import testHook from 'test-hook'
+import mountHook from 'mount-hook'
 import useTrue from './useTrue'
 
 describe('useTrue', () => {
   it('returns true', async () => {
-    await testHook(unmount => {
+    await mountHook(unmount => {
       const shouldBeTrue = useTrue()
       expect(shouldBeTrue).toBe(true)
       unmount()
@@ -21,10 +21,10 @@ describe('useTrue', () => {
 
 You must call `unmount()` to complete the test.
 
-You can use any hooks like you normally would, e.g. useEffect inside the testHook callback:
+You can use any hooks like you normally would, e.g. useEffect inside the mountHook callback:
 
 ```js
-await testHook(unmount => {
+await mountHook(unmount => {
   const apiUrl = useApiUrl()
   useEffect(() => {
     fetch(apiUrl).then(async response => {
@@ -40,21 +40,20 @@ You can provide a Wrapper component for more complicated situations:
 
 ```js
 import React from 'react'
-
-const MyContext = React.createContext('pork belly')
+import { LoginProvider, useLoginStatus } from './LoginProvider'
 
 const Wrapper = ({ children }) => {
   return (
-    <MyContext.Provider>
+    <LoginProvider>
       {/* Must render its children to work! */}
       {children} 
-    </MyContext.Provider>
+    </LoginProvider>
   )
 }
 
-await testHook({ Wrapper }, unmount => {
-  const value = useContext(MyContext)
-  expect(value).toBe('pork belly')
+await mountHook({ Wrapper }, unmount => {
+  const isLoggedIn = useLoginStatus()
+  expect(isLoggedIn).toBe(false)
 })
 ```
 
