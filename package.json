@@ -1,13 +1,13 @@
 {
   "name": "mount-hook",
-  "version": "1.0.0-beta.0",
+  "version": "1.0.0-beta.1",
   "description": "A utility allowing you to test your React hooks without resorting to weird acrobatics.",
   "keywords": [
     "react",
     "test",
     "jest"
   ],
-  "main": "src/testHook.js",
+  "main": "src/mountHook.js",
   "dependencies": {
     "jsdom": "^16.6.0",
     "jsdom-global": "^3.0.2"
