@@ -1,6 +1,6 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { act } from 'react-dom/test-utils'
+const React = require('react')
+const ReactDOM = require('react-dom')
+const { act } = require('react-dom/test-utils')
 
 const MountHookHostComponent = ({ unmount, useMountHook }) => {
   useMountHook(unmount)
@@ -40,4 +40,4 @@ const mountHook = (/* options, useMountHook */ ...args) => {
   })
 }
 
-export default mountHook
+module.exports = mountHook
