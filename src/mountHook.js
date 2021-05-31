@@ -1,7 +1,7 @@
 const React = require('react')
 const ReactDOM = require('react-dom')
 const { act } = require('react-dom/test-utils')
-require('jsdom-global')
+require('jsdom-global')()
 
 const MountHookHostComponent = ({ unmount, useMountHook }) => {
   useMountHook(unmount)
