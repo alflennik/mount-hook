@@ -2,18 +2,15 @@
   "name": "test-hook",
   "version": "1.0.0-beta.0",
   "description": "A utility allowing you to test your React hooks without resorting to weird acrobatics.",
-  "keywords": ["react", "test", "jest"],
-  "main": "index.js",
+  "keywords": [
+    "react",
+    "test",
+    "jest"
+  ],
+  "main": "src/testHook.js",
   "dependencies": {
-    "@babel/core": "^7.14.3",
-    "@babel/preset-env": "^7.14.2",
-    "@babel/preset-react": "^7.13.13",
-    "@babel/register": "^7.13.16",
-    "immer": "^9.0.2",
-    "jest": "^26.6.3",
     "jsdom": "^16.6.0",
-    "jsdom-global": "^3.0.2",
-    "prop-types": "^15.7.2"
+    "jsdom-global": "^3.0.2"
   },
   "peerDependencies": {
     "react": "^16.10.x",
